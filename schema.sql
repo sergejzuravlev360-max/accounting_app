@@ -1,1 +1,4 @@
-print("hellow world")
+CREATE TABLE categories (
+    id INTEGER PRIMARY KEY
+    name TEXT NOT NULL UNIQUE
+);
