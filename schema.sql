@@ -12,6 +12,7 @@ CREATE TABLE transactions (
     date TEXT NOT NULL DEFAULT (date('now')),
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
+
 INSERT INTO categories (name) VALUES ('Еда');
 INSERT INTO categories (name) VALUES ('Транспорт');
 INSERT INTO categories (name) VALUES ('Зарплата');
@@ -21,3 +22,14 @@ VALUES (150.50, 'expense', 1, 'Обед в кафе');
 
 INSERT INTO transactions (amount, type, category_id, description)
 VALUES (50000, 'income', 3, 'Зарплата за август');
+
+SELECT c.name, SUM(t.amount) AS total
+FROM transactions t
+JOIN categories c ON t.category_id = c.id
+WHERE t.type = 'expense'
+GROUP BY c.name;
+
+SELECT
+    SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) -
+    SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) AS balance
+FROM transactions;
