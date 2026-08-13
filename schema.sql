@@ -33,3 +33,10 @@ SELECT
     SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END) -
     SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END) AS balance
 FROM transactions;
+
+SELECT t.id, c.name AS category, t.type, t.amount, t.description, t.date
+FROM transactions t
+JOIN categories c ON t.category_id = c.id
+WHERE strftime('%Y-%m', t.date) = strftime('%Y-%m', 'now')
+ORDER BY t.date DESC;
+
