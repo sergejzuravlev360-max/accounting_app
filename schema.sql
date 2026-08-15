@@ -40,3 +40,9 @@ JOIN categories c ON t.category_id = c.id
 WHERE strftime('%Y-%m', t.date) = strftime('%Y-%m', 'now')
 ORDER BY t.date DESC;
 
+-- Средний чек по расходам
+SELECT c.name, AVG(t.amount) AS avg_expense
+FROM transactions t
+JOIN categories c ON t.category_id = c.id
+WHERE t.type = 'expense'
+GROUP BY c.name;
