@@ -53,3 +53,9 @@ FROM transactions t
 JOIN categories c ON t.category_id = c.id
 GROUP BY c.name
 ORDER BY operations_count DESC;
+
+SELECT c.name, MAX(t.amount) AS max_expense
+FROM transactions t
+JOIN categories c ON t.category_id = c.id
+WHERE t.type = 'expense'
+GROUP BY c.name;
