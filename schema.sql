@@ -59,3 +59,11 @@ FROM transactions t
 JOIN categories c ON t.category_id = c.id
 WHERE t.type = 'expense'
 GROUP BY c.name;
+
+-- Общая сумма по каждой категории (доходы и расходы)
+SELECT c.name,
+       SUM(CASE WHEN t.type = 'income' THEN t.amount ELSE 0 END) AS total_income,
+       SUM(CASE WHEN t.type = 'expense' THEN t.amount ELSE 0 END) AS total_expense
+FROM transactions t
+JOIN categories c ON t.category_id = c.id
+GROUP BY c.name;
