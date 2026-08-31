@@ -1,6 +1,6 @@
 import sqlite3
 
-with open('schema.sql', 'r', encoding = 'utr-8') as f:
+with open('schema.sql', 'r', encoding='utf-8') as f:
     schema = f.read()
 
 conn = sqlite3.connect('finance.db')
@@ -9,6 +9,26 @@ conn.commit()
 conn.close()
 
 print('Database created successfully')
+
+
+def get_connection():
+    return sqlite3.connect('finance.db')
+
+
+def add_income():
+    amount = float(input('Amount: '))
+    description = input('Description: ')
+    category_id = int(input("Category ID: "))
+
+    conn = get_connection()
+    conn.execute(
+        "INSERT INTO transactions (amount, type, category_id, description) VALUES (?, 'income', ?, ?)",
+        (amount, category_id, description)
+    )
+    conn.commit()
+    conn.close()
+    print("Income added")
+
 
 def main():
     while True:
@@ -34,6 +54,7 @@ def main():
             break
         else:
             print("Wrong choice")
+
 
 if __name__ == '__main__':
     main()
